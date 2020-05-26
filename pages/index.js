@@ -1,32 +1,30 @@
-// import Head from 'next/head'
-// import HomePage from '../components/Homepage'
-// export default function Home() {
-//   return (
-//     <div className="container">
-//       <Head>
-//         <title>Hacker News</title>
-//         <link rel="icon" href="/favicon.ico" />
-//       </Head>
+import React from "react";
+import Head from "next/head";
+import RowDataWrapper from "../components/RowDataWrapper/RowDataWrapper";
 
-      
+class HomePage extends React.Component {
+  static async getInitialProps({ query }) {
+    const currentPage = (query && query.page) || 0;
+    const res = await fetch(
+      `https://hn.algolia.com/api/v1/search/?page=${currentPage}`
+    );
+    const data = await res.json();
 
-//       <HomePage />
+    return { data: data };
+  }
 
-//       {/* <style jsx global>{`
-//         html,
-//         body {
-//           padding: 0;
-//           margin: 0;
-//           font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-//             Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-//             sans-serif;
-//         }
+  render() {
+    const { data, query } = this.props;
+    return (
+      <>
+        <Head>
+          <title> Hacker News</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <RowDataWrapper data={data} activeTop path="/" />
+      </>
+    );
+  }
+}
 
-//         * {
-//           box-sizing: border-box;
-//         }
-//       `}</style> */}
-//     </div>
-//   )
-// }
-export { default } from '../components/Homepage/Homepage';
+export default HomePage;
