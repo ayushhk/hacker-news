@@ -2,10 +2,13 @@
   "name": "hacker-news",
   "version": "0.1.0",
   "private": true,
+  "main":"index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p $PORT",
+    "heroku-postbuild":"npm run build"
+
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
